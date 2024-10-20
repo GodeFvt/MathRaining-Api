@@ -66,44 +66,56 @@ public class UserProfileService {
     }
 
     public UserProfile createUserProfile(UserProfile userProfile) {
-        return userProfileRepository.save(userProfile);
+        try {
+            return userProfileRepository.save(userProfile);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     public UserProfile updateUserProfile(String id, UserProfile userProfile) {
         UserProfile userProfileToUpdate = userProfileRepository.findById(id).orElseThrow(() -> new NotFoundException("UserProfile not found"));
+        try {
+            if (userProfile.getUserName() != null) {
+                userProfileToUpdate.setUserName(userProfile.getUserName());
+            }
+            if (userProfile.getDescrition() != null) {
+                userProfileToUpdate.setDescrition(userProfile.getDescrition());
+            }
+            if (userProfile.getRankingHighScore() != null) {
+                userProfileToUpdate.setRankingHighScore(userProfile.getRankingHighScore());
+            }
+            if (userProfile.getCompleteAchievement() != null) {
+                userProfileToUpdate.setCompleteAchievement(userProfile.getCompleteAchievement());
+            }
+            if (userProfile.getProfileConfig() != null) {
+                userProfileToUpdate.setProfileConfig(userProfile.getProfileConfig());
+            }
+            if (userProfile.getTotalScore() != null) {
+                userProfileToUpdate.setTotalScore(userProfile.getTotalScore());
+            }
+            if (userProfile.getTotalTimePlay() != null) {
+                userProfileToUpdate.setTotalTimePlay(userProfile.getTotalTimePlay());
+            }
+            if (userProfile.getCustomLevel() != null) {
+                userProfileToUpdate.setCustomLevel(userProfile.getCustomLevel());
+            }
 
-        if (userProfile.getUserName() != null) {
-            userProfileToUpdate.setUserName(userProfile.getUserName());
-        }
-        if (userProfile.getDescrition() != null) {
-            userProfileToUpdate.setDescrition(userProfile.getDescrition());
-        }
-        if (userProfile.getRankingHighScore() != null) {
-            userProfileToUpdate.setRankingHighScore(userProfile.getRankingHighScore());
-        }
-        if (userProfile.getCompleteAchievement() != null) {
-            userProfileToUpdate.setCompleteAchievement(userProfile.getCompleteAchievement());
-        }
-        if (userProfile.getProfileConfig() != null) {
-            userProfileToUpdate.setProfileConfig(userProfile.getProfileConfig());
-        }
-        if (userProfile.getTotalScore() != null) {
-            userProfileToUpdate.setTotalScore(userProfile.getTotalScore());
-        }
-        if (userProfile.getTotalTimePlay() != null) {
-            userProfileToUpdate.setTotalTimePlay(userProfile.getTotalTimePlay());
-        }
-        if (userProfile.getCustomLevel() != null) {
-            userProfileToUpdate.setCustomLevel(userProfile.getCustomLevel());
+            return userProfileRepository.save(userProfileToUpdate);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
         }
 
-        return userProfileRepository.save(userProfileToUpdate);
     }
 
 
     public void deleteUserProfile(String id) {
         UserProfile userProfile = userProfileRepository.findById(id).orElseThrow(() -> new NotFoundException("UserProfile not found"));
-        userProfileRepository.delete(userProfile);
+        try {
+            userProfileRepository.delete(userProfile);
+        } catch (Exception e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
 }

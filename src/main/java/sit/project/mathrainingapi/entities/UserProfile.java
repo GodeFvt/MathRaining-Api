@@ -25,5 +25,5 @@ public class UserProfile {
     private ProfileConfig profileConfig;
     private List<Integer> totalScore;
     private List<Integer> totalTimePlay;
-    private List<Integer> customLevel;
+    private List<CustomMode> customLevel;
 }
